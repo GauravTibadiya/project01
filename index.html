@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Linear Equation Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>દ્વિચલ સુરેખ સમીકરણ યુગ્મ </h1>
+
+        <p class="subtitle"><b>ax + by + c = 0 </b>ના સ્વરૂપમાં સમીકરણ લખો </p>
+
+        <input type="text" id="eq1" placeholder="જેમ કે  2x + 3y + 6 = 0">
+        <input type="text" id="eq2" placeholder="જેમ કે  4x + 6y + 8 = 0">
+        <button onclick="analyze()">સમીકરણ તપાસો </button>
+
+        <div id="output" class="output-box"></div>
+        <!-- <div id="graph" class="graph-box"></div> -->
+    </div>
+    <script>
+        function parseEquation(equation) {
+            equation = equation.replace(/\s+/g, ''); // Remove all spaces
+
+            const [lhs, rhs] = equation.split('=');
+            if (!lhs || rhs !== '0') throw new Error("Only ax + by + c = 0 format supported");
+
+            // Extract terms from left-hand side
+            const terms = lhs.match(/([+-]?[^+-]+)/g);
+            if (!terms || terms.length < 2) throw new Error("Invalid format");
+
+            let a = 0, b = 0, c = 0;
+
+            terms.forEach(term => {
+                if (term.includes('x')) {
+                    const val = term.replace('x', '') || '1';
+                    a = parseFloat(val === '+' ? '1' : val === '-' ? '-1' : val);
+                } else if (term.includes('y')) {
+                    const val = term.replace('y', '') || '1';
+                    b = parseFloat(val === '+' ? '1' : val === '-' ? '-1' : val);
+                } else {
+                    c = parseFloat(term);
+                }
+            });
+
+            if (isNaN(a) || isNaN(b) || isNaN(c)) throw new Error("Invalid coefficients");
+
+            return { a, b, c: -c }; // Convert ax + by + c = 0 to ax + by = -c
+        }
+
+
+
+
+
+        function analyze() {
+            const eq1 = document.getElementById("eq1").value;
+            const eq2 = document.getElementById("eq2").value;
+
+            try {
+                const e1 = parseEquation(eq1);
+                const e2 = parseEquation(eq2);
+
+                const ratioA = (e1.a / e2.a).toFixed(2);
+                const ratioB = (e1.b / e2.b).toFixed(2);
+                const ratioC = (e1.c / e2.c).toFixed(2);
+
+                let comparisonText = "";
+
+                if (ratioA !== ratioB) {
+                    comparisonText = "a₁/a₂ ≠ b₁/b₂";
+                } else if (ratioA === ratioB && ratioB === ratioC) {
+                    comparisonText = "a₁/a₂ = b₁/b₂ = c₁/c₂";
+                } else if (ratioA === ratioB && ratioB !== ratioC) {
+                    comparisonText = "a₁/a₂ = b₁/b₂ ≠ c₁/c₂";
+                }
+
+
+                let graphType = "", consistency = "", algebra = "";
+
+                if (ratioA !== ratioB) {
+                    graphType = "છેદતી રેખા ";
+                    algebra = "માત્ર એકજ ઉકેલ ";
+                    consistency = "છે ";
+                } else if (ratioA === ratioB && ratioB === ratioC) {
+                    graphType = "સંપાતી રેખા ";
+                    algebra = "અનંત ઉકેલ ";
+                    consistency = "છે ";
+                } else {
+                    graphType = "સમાંતર રેખા ";
+                    algebra = " ઉકેલ ન મળે";
+                    consistency = "નથી ";
+                }
+
+                const output = `
+  <strong>સમીકરણ 1:</strong> ${eq1}<br>
+  <strong>સમીકરણ 2:</strong> ${eq2}<br><br>
+  <strong>ગુણોત્તર:</strong><br>
+a₁/a₂ = ${ratioA}, b₁/b₂ = ${ratioB}, c₁/c₂ = ${ratioC}<br>
+<strong>તુલના:</strong> ${comparisonText}<br><br>
+  <strong>આલેખાત્મક સ્વરૂપ :</strong> ${graphType}<br>
+  <strong>બૈજિક અર્થઘટન :</strong> ${algebra}<br>
+  <strong>સુસંગત :</strong> ${consistency}
+`;
+
+
+                document.getElementById("output").innerHTML = output;
+                // drawGraph(e1, e2);
+
+            } catch (err) {
+                alert("Invalid equation format. Use ax + by + c = 0 .");
+            }
+        }
+
+        // function drawGraph(e1, e2) {
+        //     let x = [-10, 10];
+
+        //     let y1 = x.map(x => (e1.c - e1.a * x) / e1.b);
+        //     let y2 = x.map(x => (e2.c - e2.a * x) / e2.b);
+
+        //     const data = [
+        //         {
+        //             x: x,
+        //             y: y1,
+        //             mode: 'lines',
+        //             name: 'Equation 1',
+        //             line: { color: 'blue' }
+        //         },
+        //         {
+        //             x: x,
+        //             y: y2,
+        //             mode: 'lines',
+        //             name: 'Equation 2',
+        //             line: { color: 'red' }
+        //         }
+        //     ];
+
+        //     const layout = {
+        //         title: 'Graphical Representation',
+        //         xaxis: { title: 'X-axis', range: [-10, 10] },
+        //         yaxis: { title: 'Y-axis', range: [-10, 10] },
+        //     };
+
+        //     Plotly.newPlot('graph', data, layout);
+        // }
+    </script>
+
+</body>
+
+</html>
