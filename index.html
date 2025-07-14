@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linear Equation Analyzer</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -10,16 +11,17 @@
 
 <body>
     <div class="container">
-        <h1>દ્વિચલ સુરેખ સમીકરણ યુગ્મ </h1>
+        <main>
+            <h1>દ્વિચલ સુરેખ સમીકરણ યુગ્મ </h1>
 
-        <p class="subtitle"><b>ax + by + c = 0 </b>ના સ્વરૂપમાં સમીકરણ લખો </p>
+            <p class="subtitle"><b>ax + by + c = 0 </b>ના સ્વરૂપમાં સમીકરણ લખો </p>
 
-        <input type="text" id="eq1" placeholder="જેમ કે  2x + 3y + 6 = 0">
-        <input type="text" id="eq2" placeholder="જેમ કે  4x + 6y + 8 = 0">
-        <button onclick="analyze()">સમીકરણ તપાસો </button>
+            <input type="text" id="eq1" placeholder="જેમ કે  2x + 3y + 6 = 0">
+            <input type="text" id="eq2" placeholder="જેમ કે  4x + 6y + 8 = 0">
+            <button onclick="analyze()">સમીકરણ તપાસો </button>
 
-        <div id="output" class="output-box"></div>
-        <!-- <div id="graph" class="graph-box"></div> -->
+            <div id="output" class="output-box"></div>
+        </main>
     </div>
     <script>
         function parseEquation(equation) {
@@ -114,38 +116,11 @@ a₁/a₂ = ${ratioA}, b₁/b₂ = ${ratioB}, c₁/c₂ = ${ratioC}<br>
             }
         }
 
-        // function drawGraph(e1, e2) {
-        //     let x = [-10, 10];
-
-        //     let y1 = x.map(x => (e1.c - e1.a * x) / e1.b);
-        //     let y2 = x.map(x => (e2.c - e2.a * x) / e2.b);
-
-        //     const data = [
-        //         {
-        //             x: x,
-        //             y: y1,
-        //             mode: 'lines',
-        //             name: 'Equation 1',
-        //             line: { color: 'blue' }
-        //         },
-        //         {
-        //             x: x,
-        //             y: y2,
-        //             mode: 'lines',
-        //             name: 'Equation 2',
-        //             line: { color: 'red' }
-        //         }
-        //     ];
-
-        //     const layout = {
-        //         title: 'Graphical Representation',
-        //         xaxis: { title: 'X-axis', range: [-10, 10] },
-        //         yaxis: { title: 'Y-axis', range: [-10, 10] },
-        //     };
-
-        //     Plotly.newPlot('graph', data, layout);
-        // }
     </script>
+
+    <footer class="footer">
+        Made by <strong>GAURAV TIBADIYA</strong>
+    </footer>
 
 </body>
 
