@@ -103,7 +103,7 @@ main {
   border-radius: 0 0 10px 10px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 1600px) {
   h1 {
     font-size: 20px;
   }
@@ -112,7 +112,8 @@ main {
     font-size: 14px;
   }
 
-  input[type="text"], button {
+  input[type="text"],
+  button {
     font-size: 15px;
     padding: 12px;
   }
@@ -125,4 +126,56 @@ main {
     font-size: 14px;
     padding: 15px 8px;
   }
+
+  html {
+    font-size: 18px;
+  }
+}
+
+.quiz-box {
+  background: #e3f2fd;
+  border: 2px solid #90caf9;
+  border-radius: 10px;
+  padding: 25px;
+  margin-top: 30px;
+  font-size: 16px;
+  color: #0d47a1;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-box {
+  padding: 12px 16px;
+  border: 2px solid #1976d2;
+  border-radius: 8px;
+  background-color: #e3f2fd;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.option-box:hover {
+  background-color: #bbdefb;
+}
+
+.option-box.correct {
+  background-color: #c8e6c9;
+  border-color: #388e3c;
+  color: #1b5e20;
+  font-weight: bold;
+}
+
+.option-box.incorrect {
+  background-color: #ffcdd2;
+  border-color: #e53935;
+  color: #b71c1c;
+  font-weight: bold;
+}
+
+.option-box.disabled {
+  pointer-events: none;
+  opacity: 0.85;
 }
